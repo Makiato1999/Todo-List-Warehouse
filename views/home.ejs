@@ -1,0 +1,36 @@
+<%- include('home/header'); -%>
+    <ul class="nav navbar-nav navbar-right">
+        <!-- 6 -->
+        <li id="home"><a href="/home/<%= user._id %>">Home</a></li>
+        <li id="create"><a href="/create/<%= user._id %>">Create</a></li>
+        <li id="logout"><a href="/">Logout</a></li>
+    </ul>
+    </div>
+    </nav>
+
+    <body>
+        <div class="container">
+            <h1>
+                <%= user.name %>'s To-do List Warehouse
+            </h1>
+            <p>
+                <%= introduction.en %>
+                <br>
+                <%= introduction.cn %>
+            </p>
+
+            <% user.lists.forEach((list)=> { %>
+                <% if (list && list.description) { %>
+                    <h1>
+                        <%= list.title %>
+                    </h1>
+                    <p>
+                        <%= list.description.substring(0, 100)+'...' %>
+                        <a href="/list/<%= list._id %>">Open this List</a>
+                    </p>
+                <% } %>
+            <% }) %>
+           
+            
+
+            <%- include('home/footer'); -%>

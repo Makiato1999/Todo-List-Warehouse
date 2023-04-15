@@ -1,0 +1,26 @@
+
+<%- include('login/header'); -%>
+<body class="text-center">
+
+    <main class="form-signin w-100 m-auto">
+        <% if (typeof error !== 'undefined' && error !== null) { %>
+            <div class="alert alert-danger" role="alert">
+                <%= error %>
+            </div>
+        <% } %>
+        <form action="/signup" method="post">
+            <img class="mb-4" src="image/mountain.png" alt="" width="180" height="180">
+            <h1 class="h3 mb-3 fw-normal">Create an account</h1>
+
+            <input type="Name" name="name" class="form-control top" placeholder="Name" required autofocus>
+            <input type="email" name="email" class="form-control middle" placeholder="Email" required autofocus>
+            <input type="password" name="password" class="form-control middle" placeholder="Password" required autofocus>
+            <input type="password" name="confirm_password" class="form-control bottom" placeholder="Confrim Password" required autofocus>
+
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
+            <p class="mt-5 mb-3 text-muted">&copy; https://github.com/Makiato1999</p>
+        </form>
+    </main>
+
+</body>
+<%- include('login/footer'); -%>

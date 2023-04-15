@@ -36,6 +36,10 @@ const Item = mongoose.model("Item", itemSchema);
     list structure
 */
 const listSchema = new mongoose.Schema({
+    created_by : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
     title: String,
     description: String,
     items: [itemSchema]
@@ -129,7 +133,6 @@ app.get("/create/:userID", async (req, res)=>{
         user: foundUser
     });
 });
-
 app.post("/create/:userID", async (req, res)=>{
     let userID = req.params.userID;
     let listTitle = req.body.title;
@@ -137,6 +140,7 @@ app.post("/create/:userID", async (req, res)=>{
     let foundUser = await User.findOne({ _id: userID}).exec();
 
     let list = new List({
+        created_by: userID,
         title: listTitle,
         description: listDescription 
     });
@@ -145,6 +149,19 @@ app.post("/create/:userID", async (req, res)=>{
 
     res.redirect("/home/"+userID);
 });
+
+app.get("/list/:listID", async (req, res)=>{
+    let listID = req.params.listID;
+    let foundUser = await User.findOne(
+        {"lists._id": listID},
+        {"lists.$": 1}
+    ).exec();
+    let foundList = foundUser.lists[0];
+    res.render("list", {
+        list: foundList
+    });
+});
+
 /*
 app.listen(process.env.PORT || 3000, ()=>{
     console.log("Server is running on port 3000");

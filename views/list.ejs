@@ -1,24 +1,40 @@
-<%- include('header'); -%>
-<body>
-    <div class="box" id="heading">
-        <h1 style="color: white;"><%= listTitle %></h1>
+<%- include('home/header'); -%>
+    <ul class="nav navbar-nav navbar-right">
+        <!-- 6 -->
+        <li id="home"><a href="/home/<%= list.created_by %>">Home</a></li>
+        <li id="create"><a href="/create/<%= list.created_by %>">Create</a></li>
+        <li id="logout"><a href="/">Logout</a></li>
+    </ul>
     </div>
+    </nav>
+    <body>
+        <div class="container list">
 
-    <div class="box">
-        <% newItems.forEach(perItem => { %>
-            <form class="check_box" action="/delete" method="POST">
-                <div class="item">    
-                    <input type="checkbox" name="selectedItem" value="<%= perItem._id %>" onchange="this.form.submit()">
-                    <p><%= perItem.item %></p>
-                </div>
-                <input type="hidden" name="listCategory" value="<%= listTitle %>">
-            </form>
-        <% }) %>
-        
-        <form class="item" action="/" method="POST">
-            <input type="text" name="inputNewItem" placeholder="New Item" autocomplete="off">
-            <button type="submit" name="list" value="<%= listTitle %>" >+</button>
-        </form>
-    </div>
-</body>
-<%- include('footer'); -%>
+            <%- include('list/header'); -%>
+            <div class="box" id="heading">
+                <h1 style="color: white;">
+                    <%= list.title %>
+                </h1>
+                <p>
+                    <%= list.description %>
+                </p>
+            </div>
+
+            <div class="box">
+                <% list.items.forEach(perItem => { %>
+                    <form class="check_box" action="/delete" method="POST">
+                        <div class="item">    
+                            <input type="checkbox" name="selectedItem" value="<%= perItem._id %>" onchange="this.form.submit()">
+                            <p><%= perItem.item %></p>
+                        </div>
+                        <input type="hidden" name="listID" value="<%= list._id %>">
+                    </form>
+                <% }) %>
+                
+                <form class="item" action="/list/<%= list._id %>" method="POST">
+                    <input type="text" name="inputNewItem" placeholder="New Item" autocomplete="off">
+                    <button type="submit" name="list" value="<%= list._id %>" >+</button>
+                </form>
+            </div>
+
+    <%- include('home/footer'); -%>

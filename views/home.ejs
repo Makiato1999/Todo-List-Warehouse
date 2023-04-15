@@ -7,9 +7,9 @@
     </ul>
     </div>
     </nav>
-
     <body>
         <div class="container">
+
             <h1>
                 <%= user.name %>'s To-do List Warehouse
             </h1>
@@ -21,9 +21,9 @@
 
             <% user.lists.forEach((list)=> { %>
                 <% if (list && list.description) { %>
-                    <h1>
+                    <h3>
                         <%= list.title %>
-                    </h1>
+                    </h3>
                     <p>
                         <%= list.description.substring(0, 100)+'...' %>
                         <a href="/list/<%= list._id %>">Open this List</a>

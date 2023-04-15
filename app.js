@@ -69,11 +69,15 @@ const User = mongoose.model("User", userSchema);
 
 
 
-
-
+/*
+    show login page
+*/
 app.get("/", (req, res)=>{
     res.render("login");
 });
+/*
+    login to home page
+*/
 app.post("/login", async (req, res)=>{
     let email = req.body.email;
     let foundUser = await User.findOne({ email: email}).exec();
@@ -83,6 +87,9 @@ app.post("/login", async (req, res)=>{
         res.redirect("/home/"+foundUser._id);    
     }
 });
+/*
+    show home page in current user account
+*/
 app.get("/home/:userID", async (req, res)=>{
     let userID = req.params.userID;
     let foundUser = await User.findOne({ _id: userID}).exec();
@@ -94,9 +101,15 @@ app.get("/home/:userID", async (req, res)=>{
         }
     });    
 });
+/*
+    show signup page
+*/
 app.get("/signup", (req, res)=>{
     res.render("signup");
 });
+/*
+    signup a user account and go to login page  
+*/
 app.post("/signup", async (req, res)=>{
     let name = req.body.name;
     let email = req.body.email;
@@ -125,7 +138,9 @@ app.post("/signup", async (req, res)=>{
         }
     }
 });
-
+/*
+    show create list page in current user account
+*/
 app.get("/create/:userID", async (req, res)=>{
     let userID = req.params.userID;
     let foundUser = await User.findOne({ _id: userID}).exec();
@@ -133,6 +148,9 @@ app.get("/create/:userID", async (req, res)=>{
         user: foundUser
     });
 });
+/*
+    create list
+*/
 app.post("/create/:userID", async (req, res)=>{
     let userID = req.params.userID;
     let listTitle = req.body.title;
@@ -149,7 +167,9 @@ app.post("/create/:userID", async (req, res)=>{
 
     res.redirect("/home/"+userID);
 });
-
+/*
+    show items in current list
+*/
 app.get("/list/:listID", async (req, res)=>{
     let listID = req.params.listID;
     let foundUser = await User.findOne(
@@ -161,6 +181,9 @@ app.get("/list/:listID", async (req, res)=>{
         list: foundList
     });
 });
+/*
+    add item in current list
+*/
 app.post("/list/:listID", async (req, res)=>{
     let itemContent = req.body.inputNewItem;
     let listID = req.params.listID;
@@ -178,7 +201,30 @@ app.post("/list/:listID", async (req, res)=>{
         res.redirect('/list/'+listID);
     }
 });
-
+/*
+    delete item in current list
+*/
+app.post("/delete", async (req, res)=>{
+    let item_id = req.body.selectedItem;
+    let listCategory = req.body.listCategory;
+    try {
+        if (listCategory === "Today") {
+            await Item.findByIdAndDelete(item_id); 
+            res.redirect('/');
+        } else {
+            let list = await List.findOneAndUpdate(
+                {name: listCategory}, 
+                {$pull: {items: {_id: item_id}}},
+                {new: true}
+            );
+            await list.save();
+            res.redirect('/'+listCategory);
+        }
+    } catch (error) {
+        console.error(err);
+        res.status(500).send("Error inserting default items into database.");
+    }
+});
 
 /*
 app.listen(process.env.PORT || 3000, ()=>{

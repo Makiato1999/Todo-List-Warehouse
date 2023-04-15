@@ -161,6 +161,24 @@ app.get("/list/:listID", async (req, res)=>{
         list: foundList
     });
 });
+app.post("/list/:listID", async (req, res)=>{
+    let itemContent = req.body.inputNewItem;
+    let listID = req.params.listID;
+
+    if (itemContent !== '') {
+        let newItem = new Item({
+            item: itemContent
+        });
+
+        let foundUser = await User.findOne({"lists._id": listID});
+        let foundList = foundUser.lists.find(list => list._id == listID);
+        foundList.items.push(newItem);
+
+        await foundUser.save();
+        res.redirect('/list/'+listID);
+    }
+});
+
 
 /*
 app.listen(process.env.PORT || 3000, ()=>{

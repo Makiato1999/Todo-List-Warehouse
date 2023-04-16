@@ -196,7 +196,6 @@ app.post("/list/:listID", async (req, res)=>{
         let foundUser = await User.findOne({"lists._id": listID});
         let foundList = foundUser.lists.find(list => list._id == listID);
         foundList.items.push(newItem);
-
         await foundUser.save();
         res.redirect('/list/'+listID);
     }
@@ -204,27 +203,25 @@ app.post("/list/:listID", async (req, res)=>{
 /*
     delete item in current list
 */
-app.post("/delete", async (req, res)=>{
-    let item_id = req.body.selectedItem;
-    let listCategory = req.body.listCategory;
+app.post("/list/:listID/delete/:itemID", async (req, res) => {
+    let listID = req.params.listID;
+    let itemID = req.params.itemID;
     try {
-        if (listCategory === "Today") {
-            await Item.findByIdAndDelete(item_id); 
-            res.redirect('/');
-        } else {
-            let list = await List.findOneAndUpdate(
-                {name: listCategory}, 
-                {$pull: {items: {_id: item_id}}},
-                {new: true}
-            );
-            await list.save();
-            res.redirect('/'+listCategory);
+        let result = await User.findOneAndUpdate(
+          { 'lists._id': listID },
+          { $pull: { 'lists.$[].items': { _id: itemID } } },
+          { new: true }
+        );
+        if (!result) {
+          return res.status(404).send('List or item not found');
         }
+        res.redirect('/list/'+listID);
     } catch (error) {
-        console.error(err);
-        res.status(500).send("Error inserting default items into database.");
+        console.error(error);
+        res.status(500).send('Server error');
     }
 });
+  
 
 /*
 app.listen(process.env.PORT || 3000, ()=>{

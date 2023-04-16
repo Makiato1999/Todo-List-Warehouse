@@ -5,7 +5,7 @@ Welcome to your personal To-do List Warehouse! Here, you can view all the lists 
 
 ### demo
 <img src="demo/login.png"  width="650" height="400">
-<img src="demo/sigup.png"  width="650" height="400">
+<img src="demo/signup.png"  width="650" height="400">
 <img src="demo/home.png"  width="650" height="400">
 <img src="demo/create.png"  width="650" height="400">
 <img src="demo/list.png"  width="650" height="400">

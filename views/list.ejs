@@ -21,11 +21,11 @@
             </div>
 
             <div class="box">
-                <% list.items.forEach(perItem => { %>
-                    <form class="check_box" action="/delete" method="POST">
+                <% list.items.forEach(item => { %>
+                    <form class="check_box" action="/list/<%= list._id %>/delete/<%= item._id %>" method="POST">
                         <div class="item">    
-                            <input type="checkbox" name="selectedItem" value="<%= perItem._id %>" onchange="this.form.submit()">
-                            <p><%= perItem.item %></p>
+                            <input type="checkbox" name="selectedItem" value="<%= item._id %>" onchange="this.form.submit()">
+                            <p><%= item.item %></p>
                         </div>
                         <input type="hidden" name="listID" value="<%= list._id %>">
                     </form>

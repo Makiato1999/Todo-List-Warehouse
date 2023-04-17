@@ -9,3 +9,22 @@ Welcome to your personal To-do List Warehouse! Here, you can view all the lists 
 <img src="demo/home.png"  width="650" height="400">
 <img src="demo/create.png"  width="650" height="400">
 <img src="demo/list.png"  width="650" height="400">
+
+
+## How to access this app
+1. access this app by the url
+    ```
+    ```
+## How to run this app on local server and local database
+1. create connection to local database
+    ```
+    mongod --config /usr/local/etc/mongod.conf
+    ```
+2. run this app on local server with port 3000
+    ```
+    node app.js
+    ```
+3. access this app by the url
+    ```
+    http://localhost:3000/
+    ```

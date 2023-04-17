@@ -20,7 +20,7 @@ const introduction_cn = "欢迎来到你的个人待办事项清单仓库! 在�
 db_init().catch(err => console.log(err));
 async function db_init() {
     try {
-        await mongoose.connect('mongodb://localhost:27017/todolistDB', {useNewUrlParser: true});
+        await mongoose.connect('mongodb+srv://admin-shawn:shawn990610@cluster0.whfip5e.mongodb.net/todolistDB', {useNewUrlParser: true});
     } catch (error) {
         console.error(error);
     }

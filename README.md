@@ -12,9 +12,12 @@ Welcome to your personal To-do List Warehouse! Here, you can view all the lists 
 
 
 ## How to access this app
-1. access this app by the url
-    ```
-    ```
+Access this app by [link](https://shielded-plains-26704.herokuapp.com/)
+- current issue
+if you access this app by using Google browser, Google will push a warning that 'Deceptive site ahead', since this is only a simple project, i haven't consider the cyber security factors in it, so this warning is normal 
+- solution
+you can choose to ignore the warning and insist on visiting this site, or you can try other browsers, such as Firefox. However, remember not to use real personal information, as I have not made any security protection for this project
+
 ## How to run this app on local server and local database
 1. create connection to local database
     ```
@@ -28,3 +31,5 @@ Welcome to your personal To-do List Warehouse! Here, you can view all the lists 
     ```
     http://localhost:3000/
     ```
+4. more installation, running walkthrough and details you can see my notes
+    - 
